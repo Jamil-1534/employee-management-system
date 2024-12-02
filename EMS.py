@@ -27,7 +27,9 @@ def selection(event):
         salaryEntry.insert(0, row[5])
 
 
-def clear():
+def clear(value=False):
+    if value:
+        tree.selection_remove(tree.focus())
     idEntry.delete(0, END)           
     nameEntry.delete(0, END)         
     phoneEntry.delete(0, END)                  
@@ -59,7 +61,7 @@ def add_employee():
 
 
 window=CTk()
-window.geometry('930x580+100+100') 
+window.geometry('1200x620+100+100') 
 window.resizable (False, False) 
 window.title('Employee Management System')
 window.configure(fg_color='#161030')
@@ -162,7 +164,7 @@ scrollbar.grid(row=1,column=4,sticky='ns')
 buttonFrame=CTkFrame(window,fg_color='#161030')
 buttonFrame.grid(row=2,column=0,columnspan=2)
 
-newButton=CTkButton(buttonFrame, text='New Employee', font=('arial', 15, 'bold'), width=160,corner_radius=15)
+newButton=CTkButton(buttonFrame, text='New Employee', font=('arial', 15, 'bold'), width=160,corner_radius=15,command=lambda:clear(True))
 newButton.grid(row=0,column=0,pady=5)
 
 addButton=CTkButton(buttonFrame, text='Add Employee', font=('arial', 15, 'bold'), width=160,corner_radius=15,command=add_employee)
@@ -176,6 +178,9 @@ deleteButton.grid(row=0,column=3,pady=5,padx=5)
 
 deleteallButton=CTkButton(buttonFrame, text='Delete All',font=('arial', 15, 'bold'), width=160,corner_radius=15)
 deleteallButton.grid(row=0,column=4,pady=5,padx=5)
+
+sectionButton=CTkButton(buttonFrame, text='Section',font=('arial', 15, 'bold'), width=160,corner_radius=15)
+sectionButton.grid(row=0,column=4,pady=5,padx=5)
 
 treeview_data()
 
