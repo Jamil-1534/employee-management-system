@@ -3,6 +3,25 @@ from PIL import Image
 from tkinter import ttk,messagebox
 import database
 
+def search_employee():
+    if searchEntry.get()=='':
+        messagebox.showerror('Error', 'Enter value to search')
+    elif searchBox.get()=='Search By':
+        messagebox.showerror('Error', 'Please select an option')
+    else:
+        searched_data=database.search(searchBox.get(), searchEntry.get())
+        print(searched_data)
+
+def delete_employee():
+    selected_item=tree.selection()
+    if not selected_item:
+        messagebox.showerror('Error', 'Select data to delete')
+    else:
+        database.delete(idEntry.get())
+        treeview_data()
+        clear()
+        messagebox.showerror('Error','Data is deleted')
+
 def update_employee():
     selected_item=tree.selection()
     if not selected_item:
@@ -125,7 +144,7 @@ searchBox.set('Search By')
 searchEntry=CTkEntry(rightFrame) 
 searchEntry.grid(row=0,column=1)
 
-searchButton=CTkButton(rightFrame, text='Search', width=100) 
+searchButton=CTkButton(rightFrame, text='Search', width=100,command=search_employee) 
 searchButton.grid(row=0,column=2)
 
 showallButton=CTkButton(rightFrame, text='Show All', width=100) 
@@ -173,15 +192,11 @@ addButton.grid(row=0,column=1,pady=5,padx=5)
 updateButton=CTkButton(buttonFrame, text='Update Employee', font=('arial', 15, 'bold'), width=160,corner_radius=15,command=update_employee)
 updateButton.grid(row=0,column=2,pady=5,padx=5)
 
-deleteButton=CTkButton(buttonFrame, text='Delete Employee', font=('arial', 15, 'bold'), width=160,corner_radius=15)
+deleteButton=CTkButton(buttonFrame, text='Delete Employee', font=('arial', 15, 'bold'), width=160,corner_radius=15,command=delete_employee)
 deleteButton.grid(row=0,column=3,pady=5,padx=5)
 
 deleteallButton=CTkButton(buttonFrame, text='Delete All',font=('arial', 15, 'bold'), width=160,corner_radius=15)
 deleteallButton.grid(row=0,column=4,pady=5,padx=5)
-
-sectionButton=CTkButton(buttonFrame, text='Section',font=('arial', 15, 'bold'), width=160,corner_radius=15)
-sectionButton.grid(row=0,column=4,pady=5,padx=5)
-
 treeview_data()
 
 window.bind('<ButtonRelease>', selection)
